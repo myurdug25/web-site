@@ -1,0 +1,48 @@
+{% load static %}
+<!-- Projects Section -->
+<section id="projects" class="projects">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Projelerim</h2>
+        <div class="project-filters" data-aos="fade-up">
+            <button class="filter-btn active" data-filter="all">Tümü</button>
+            {% for category in project_categories %}
+            <button class="filter-btn" data-filter="{{ category.slug }}">{{ category.name }}</button>
+            {% endfor %}
+        </div>
+        <div class="project-grid">
+            {% for project in projects %}
+            <div class="project-card" data-category="{{ project.category.slug }}" data-aos="fade-up">
+                <div class="project-image">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <div class="project-overlay">
+                        <div class="project-links">
+                            {% if project.project_url %}
+                            <a href="{{ project.project_url }}" class="project-link" target="_blank"><i class="fas fa-link"></i></a>
+                            {% endif %}
+                            {% if project.github_url %}
+                            <a href="{{ project.github_url }}" class="project-link" target="_blank"><i class="fab fa-github"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:20 }}</p>
+                    <div class="project-tags">
+                        {% for tag in project.tags.all %}
+                        <span>{{ tag.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{% if project.button_url %}{{ project.button_url }}{% else %}{% url 'blog:project_detail' project.slug %}{% endif %}"
+                       class="btn btn-sm btn-outline-primary"
+                       {% if project.button_url %}target="_blank"{% endif %}>
+                        {{ project.button_text }}
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

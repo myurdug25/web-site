@@ -1,0 +1,30 @@
+{% load static %}
+<!-- Skills Section -->
+<section id="skills" class="skills">
+    <div class="container">
+        <h2 class="section-title">Yeteneklerim</h2>
+        <div class="skills-content">
+            {% for category in skill_categories %}
+            <div class="skill-category">
+                <h3>
+                    {% if category.icon %}
+                        <i class="{{ category.icon }}"></i>
+                    {% endif %}
+                    {{ category.name }}
+                </h3>
+                <div class="skill-items">
+                    {% for skill in category.skills.all %}
+                    <div class="skill-item">
+                        {% if skill.image %}
+                            <img src="{{ skill.image.url }}" alt="{{ skill.name }}">
+                        {% endif %}
+                        <div>{{ skill.name }}</div>
+                        <a href="{% url 'blog:skill_detail' skill.slug %}" class="btn btn-sm btn-outline-primary" style="margin-top:10px;">Detayı İncele</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

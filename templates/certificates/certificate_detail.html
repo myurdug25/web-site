@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ certificate.title }} - Sertifika Detayı{% endblock %}
+
+{% block content %}
+<div class="certificate-detail">
+    <div class="container">
+        <div class="certificate-detail-content">
+            <div class="certificate-detail-header">
+                <h1>{{ certificate.title }}</h1>
+                <p class="issuer">{{ certificate.issuer }}</p>
+                <p class="date">{{ certificate.date|date:"F Y" }}</p>
+            </div>
+
+            {% if certificate.image %}
+            <div class="certificate-detail-image">
+                <img src="{{ certificate.image.url }}" alt="{{ certificate.title }}">
+            </div>
+            {% endif %}
+
+            <div class="certificate-detail-info">
+                {% if certificate.description %}
+                <div class="description">
+                    <h3>Açıklama</h3>
+                    <p>{{ certificate.description }}</p>
+                </div>
+                {% endif %}
+
+                {% if certificate.credential_id %}
+                <div class="credential-info">
+                    <h3>Sertifika Bilgileri</h3>
+                    <p><strong>Sertifika ID:</strong> {{ certificate.credential_id }}</p>
+                </div>
+                {% endif %}
+
+                {% if certificate.credential_url %}
+                <div class="credential-link">
+                    <a href="{{ certificate.credential_url }}" class="btn btn-primary" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> Sertifikayı Görüntüle
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.certificate-detail {
+    padding: 100px 0;
+    background: #f9fafb;
+    min-height: calc(100vh - 300px);
+}
+
+.certificate-detail-content {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.07);
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.certificate-detail-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.certificate-detail-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.certificate-detail-header .issuer {
+    color: #4f46e5;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.certificate-detail-header .date {
+    color: #6b7280;
+    font-size: 1rem;
+}
+
+.certificate-detail-image {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.certificate-detail-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.certificate-detail-info {
+    margin-top: 40px;
+}
+
+.certificate-detail-info h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+.certificate-detail-info .description p {
+    color: #4b5563;
+    font-size: 1.125rem;
+    line-height: 1.7;
+}
+
+.credential-info {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.credential-info p {
+    margin: 0;
+    color: #4b5563;
+}
+
+.credential-link {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.credential-link .btn {
+    padding: 12px 30px;
+    font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+    .certificate-detail {
+        padding: 60px 0;
+    }
+
+    .certificate-detail-content {
+        padding: 20px;
+    }
+
+    .certificate-detail-header h1 {
+        font-size: 2rem;
+    }
+}
+</style>
+{% endblock %} 

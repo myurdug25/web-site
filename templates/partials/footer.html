@@ -1,0 +1,25 @@
+{% load static %}
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-logo">
+                {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="Logo">
+                {% else %}
+                    <img src="{% static 'images/depositphotos_59724143-stock-illustration-business-concept-progress-of-it.jpg' %}" alt="Logo">
+                {% endif %}
+                <p>{{ site_settings.site_name }}</p>
+            </div>
+            <div class="footer-social">
+                {% if site_settings.github %}<a href="{{ site_settings.github }}" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>{% endif %}
+                {% if site_settings.linkedin %}<a href="{{ site_settings.linkedin }}" class="social-icon" target="_blank"><i class="fab fa-linkedin"></i></a>{% endif %}
+                {% if site_settings.twitter %}<a href="{{ site_settings.twitter }}" class="social-icon" target="_blank"><i class="fab fa-twitter"></i></a>{% endif %}
+                {% if site_settings.instagram %}<a href="{{ site_settings.instagram }}" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>{% endif %}
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>{{ site_settings.copyright }}</p>
+        </div>
+    </div>
+</footer> 

@@ -1,0 +1,257 @@
+{% load static %}
+<!-- Education & Experience Section -->
+<section id="education" class="education">
+    <div class="container">
+        <h2 class="section-title" data-aos="fade-up">Eğitim & Deneyim</h2>
+        
+        <div class="timeline">
+            <!-- Eğitim -->
+            <div class="timeline-section" data-aos="fade-right">
+                <h3 class="timeline-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    Eğitim
+                </h3>
+                <div class="timeline-items">
+                    {% for education in educations %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>{{ education.title }}</h4>
+                            <h5>{{ education.school }}</h5>
+                            <span class="timeline-date">
+                                {{ education.start_date|date:"Y" }} - 
+                                {% if education.is_current %}
+                                    Devam Ediyor
+                                {% else %}
+                                    {{ education.end_date|date:"Y" }}
+                                {% endif %}
+                            </span>
+                            {% if education.gpa %}
+                            <p>GPA: {{ education.gpa }}/4.00</p>
+                            {% endif %}
+                            <p>{{ education.description }}</p>
+                            <div class="timeline-tags">
+                                {% for tag in education.tags.all %}
+                                <span>{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Deneyim -->
+            <div class="timeline-section" data-aos="fade-left">
+                <h3 class="timeline-title">
+                    <i class="fas fa-briefcase"></i>
+                    Deneyim
+                </h3>
+                <div class="timeline-items">
+                    {% for experience in experiences %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>{{ experience.title }}</h4>
+                            <h5>{{ experience.company }}</h5>
+                            <span class="timeline-date">
+                                {{ experience.start_date|date:"Y" }} - 
+                                {% if experience.is_current %}
+                                    Devam Ediyor
+                                {% else %}
+                                    {{ experience.end_date|date:"Y" }}
+                                {% endif %}
+                            </span>
+                            <p>{{ experience.description }}</p>
+                            <div class="timeline-tags">
+                                {% for tag in experience.tags.all %}
+                                <span>{{ tag.name }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Sertifikalar -->
+            <!-- BURADAN BAŞLAYAN SERTİFİKA BÖLÜMÜ SİLİNECEK -->
+            <!--
+            <div class="timeline-section" data-aos="fade-left">
+                <h3 class="timeline-title">
+                    <i class="fas fa-certificate"></i>
+                    Sertifikalar
+                </h3>
+                <div class="timeline-items">
+                    {% for certificate in certificates %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h4>{{ certificate.title }}</h4>
+                            <h5>{{ certificate.issuer }}</h5>
+                            <span class="timeline-date">{{ certificate.date|date:"Y" }}</span>
+                            {% if certificate.credential_url %}
+                            <a href="{{ certificate.credential_url }}" class="certificate-link" target="_blank">
+                                Sertifikayı Görüntüle <i class="fas fa-external-link-alt"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            -->
+            <!-- SERTİFİKA BÖLÜMÜ SONU -->
+        </div>
+
+        <!-- Kod Örnekleri -->
+        <div class="code-examples" data-aos="fade-up">
+            <h3 class="section-subtitle">
+                <i class="fas fa-code"></i>
+                Kod Örnekleri
+            </h3>
+            
+            <!-- Kod Dilleri (Dinamik) -->
+            <div class="code-categories">
+                {% for language in code_languages %}
+                    {% if language.code_examples.count > 0 %}
+                    <button class="category-btn {% if forloop.first %}active{% endif %}" data-category="{{ language.slug }}" data-language-id="{{ language.id }}">
+                        {% if language.icon %}<i class="{{ language.icon }}"></i>{% endif %} {{ language.name }}
+                    </button>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <!-- Kod Kategorileri (Dinamik, JS ile filtrelenecek) -->
+            <div class="code-subcategories">
+                {% for category in code_categories %}
+                <button class="subcategory-btn {% if forloop.first %}active{% endif %}" data-subcategory="{{ category.slug }}" data-language-id="{{ category.language.id }}">
+                    {{ category.name }}
+                </button>
+                {% endfor %}
+            </div>
+
+            <!-- Kod Örnekleri Gridleri (Dinamik) -->
+            {% for language in code_languages %}
+                {% for category in code_categories %}
+                <div class="code-grid{% if forloop.parentloop.first and forloop.first %} active{% endif %}" data-category="{{ language.slug }}" data-subcategory="{{ category.slug }}">
+                    {% for example in code_examples %}
+                        {% if example.language_id == language.id and example.category_id == category.id %}
+                        <div class="code-accordion">
+                            <div class="accordion-header">
+                                <div class="accordion-title">
+                                    <span class="lesson-number">Örnek {{ forloop.counter }}</span>
+                                    <h4>{{ example.title }}</h4>
+                                </div>
+                                <button class="accordion-toggle">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="code-card" style="background:#181c2a; border-radius:12px; padding:18px 20px; margin-bottom:10px;">
+                                    <pre style="background:#23272f; color:#eaeaea; border-radius:8px; padding:12px 16px; font-size:1rem; margin-bottom:0; overflow-x:auto;"><code class="language-{{ language.slug }}" id="code-{{ example.id }}">{{ example.code|linebreaksbr|cut:'\r'|slice:':5' }}</code></pre>
+                                    <div class="d-flex justify-content-end mt-2">
+                                        <a href="{% url 'blog:codeexample_detail' example.slug %}" class="btn btn-sm btn-outline-primary">Detayları Gör</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const subcategoryBtns = document.querySelectorAll('.subcategory-btn');
+    const codeGrids = document.querySelectorAll('.code-grid');
+
+    let activeLanguageBtn = document.querySelector('.category-btn.active');
+    let activeLanguageId = activeLanguageBtn ? activeLanguageBtn.getAttribute('data-language-id') : null;
+    let activeLanguageSlug = activeLanguageBtn ? activeLanguageBtn.getAttribute('data-category') : null;
+
+    function filterCategories(languageId) {
+        subcategoryBtns.forEach(btn => {
+            if (btn.getAttribute('data-language-id') === languageId) {
+                btn.style.display = '';
+            } else {
+                btn.style.display = 'none';
+            }
+        });
+        // İlk uygun kategoriyi aktif yap
+        const firstVisible = Array.from(subcategoryBtns).find(btn => btn.style.display !== 'none');
+        subcategoryBtns.forEach(btn => btn.classList.remove('active'));
+        if (firstVisible) firstVisible.classList.add('active');
+    }
+
+    function showActiveGrid() {
+        const activeCategoryBtn = document.querySelector('.subcategory-btn.active');
+        const activeCategorySlug = activeCategoryBtn ? activeCategoryBtn.getAttribute('data-subcategory') : null;
+        codeGrids.forEach(grid => {
+            if (
+                grid.getAttribute('data-category') === activeLanguageSlug &&
+                grid.getAttribute('data-subcategory') === activeCategorySlug
+            ) {
+                grid.classList.add('active');
+            } else {
+                grid.classList.remove('active');
+            }
+        });
+    }
+
+    categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            categoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeLanguageId = this.getAttribute('data-language-id');
+            activeLanguageSlug = this.getAttribute('data-category');
+            filterCategories(activeLanguageId);
+            showActiveGrid();
+        });
+    });
+
+    subcategoryBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            subcategoryBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            showActiveGrid();
+        });
+    });
+
+    // Sayfa yüklenince ilk dili ve ilk kategoriyi uygula
+    if (activeLanguageId) {
+        filterCategories(activeLanguageId);
+        showActiveGrid();
+    }
+
+    // Tüm anchor linkleri seç
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href').replace('#', '');
+            const target = document.getElementById(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+                // URL'yi güncelleme! (hash eklenmeyecek)
+            }
+        });
+    });
+
+    // Eğer başka bir sayfadan #ile gelindiyse, otomatik kaydır
+    if (window.location.hash) {
+        const target = document.getElementById(window.location.hash.replace('#', ''));
+        if (target) {
+            setTimeout(function() {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+            // Hash'i temizle
+            history.replaceState(null, null, window.location.pathname);
+        }
+    }
+});
+</script> 

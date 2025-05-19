@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Murat YURDUGÜL - Yazılım Mühendisliği Öğrencisi ve Web Geliştirici Portfolio Sitesi">
+    <meta name="keywords" content="yazılım mühendisi, web geliştirici, portfolio, murat yurdugül">
+    <meta name="author" content="Murat YURDUGÜL">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://murat-yurdugul.com/">
+    <meta property="og:title" content="Murat YURDUGÜL - Portfolio">
+    <meta property="og:description" content="Yazılım Mühendisliği Öğrencisi ve Web Geliştirici Portfolio Sitesi">
+    <meta property="og:image" content="{% static 'images/MuratYurdugül.jpg' %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://murat-yurdugul.com/">
+    <meta property="twitter:title" content="Murat YURDUGÜL - Portfolio">
+    <meta property="twitter:description" content="Yazılım Mühendisliği Öğrencisi ve Web Geliştirici Portfolio Sitesi">
+    <meta property="twitter:image" content="{% static 'images/MuratYurdugül.jpg' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    
+    <!-- Preload -->
+    <link rel="preload" href="{% static 'css/style.css' %}" as="style">
+    <link rel="preload" href="{% static 'js/main.js' %}" as="script">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' https: 'unsafe-inline' 'unsafe-eval'; style-src 'self' https: 'unsafe-inline'; img-src 'self' https: data:; font-src 'self' https: data:;">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    
+    <title>Murat YURDUGÜL - Portfolio</title>
+</head>
+<body>
+    {% include 'partials/navbar.html' %}
+    
+    {% block content %}
+    {% endblock %}
+    
+    {% include 'partials/footer.html' %}
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html> 

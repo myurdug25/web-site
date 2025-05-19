@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="skill-detail-section">
+    <div class="container">
+        <div class="skill-detail-card">
+            {% if skill.image %}
+                <img src="{{ skill.image.url }}" alt="{{ skill.name }}" class="skill-detail-img">
+            {% endif %}
+            <h2 class="skill-detail-title">{{ skill.name }}</h2>
+            <p class="skill-detail-category">
+                {% if skill.category.icon %}<i class="{{ skill.category.icon }}"></i>{% endif %}
+                {{ skill.category.name }}
+            </p>
+            {% if skill.description %}
+                <div class="skill-detail-desc">{{ skill.description }}</div>
+            {% endif %}
+            <a href="{% url 'blog:index' %}#skills" class="btn btn-primary" style="margin-top:20px;">← Yeteneklerime Dön</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+<footer class="footer sticky-footer">
+    <div class="container">
+        <div class="footer-content">
+            <span>{{ site_settings.footer_text }}</span>
+        </div>
+    </div>
+</footer>
+{% endblock %}
+
+<style>
+.sticky-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #22223b;
+    color: #fff;
+    padding: 18px 0 10px 0;
+    z-index: 100;
+    text-align: center;
+}
+</style> 
