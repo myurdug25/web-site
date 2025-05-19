@@ -14,11 +14,9 @@
             <i class="fas fa-bars"></i>
         </div>
         <ul class="nav-links">
-            <li><a href="/#home">Ana Sayfa</a></li>
-            <li><a href="/#about">Hakkımda</a></li>
-            <li><a href="/#skills">Yetenekler</a></li>
-            <li><a href="/#projects">Projeler</a></li>
-            <li><a href="/#contact">İletişim</a></li>
+            {% for link in navbar_links %}
+                <li><a href="/" data-section="{{ link.section }}">{{ link.title }}</a></li>
+            {% endfor %}
             {% if site_settings.cv_file %}
             <li><a href="{{ site_settings.cv_file.url }}" class="btn-cv" target="_blank"><i class="fas fa-download"></i> CV İndir</a></li>
             {% endif %}
@@ -27,33 +25,28 @@
 </nav>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Sadece anasayfadaysa smooth scroll yap
-    if (window.location.pathname === "/" || window.location.pathname === "/index/") {
-        document.querySelectorAll('.nav-links a[href^="/#"]').forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                const hash = this.getAttribute('href').split('#')[1];
-                const target = document.getElementById(hash);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    // Hash'i güncelle
-                    history.replaceState(null, null, '/#' + hash);
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.nav-links a[data-section]');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const section = this.getAttribute('data-section');
+            
+            // Eğer ana sayfada değilsek, önce ana sayfaya yönlendir
+            if (window.location.pathname !== '/') {
+                window.location.href = '/#' + section;
+            } else {
+                // Ana sayfadaysak, direkt scroll yap
+                const targetElement = document.getElementById(section);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
                 }
-            });
-        });
-        // Sayfa yüklendiğinde hash varsa kaydır
-        if (window.location.hash) {
-            const target = document.getElementById(window.location.hash.replace('#', ''));
-            if (target) {
-                setTimeout(function() {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }, 300);
             }
-        }
-    }
+        });
+    });
 });
-</script> 
+</script>
 
 <style>
 .skill-detail-section {

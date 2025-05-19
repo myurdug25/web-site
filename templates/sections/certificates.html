@@ -1,37 +1,24 @@
-{% load static %}
-
-<!-- Certificates Section -->
-<section id="certificates" class="certificates">
+<section id="certificates" class="certificates-section">
     <div class="container">
         <h2 class="section-title">Sertifikalarım</h2>
-        <p class="section-subtitle">Eğitim ve yetkinliklerimi gösteren sertifikalarım</p>
-
         <div class="certificates-grid">
             {% for certificate in certificates %}
-            <div class="certificate-card" data-aos="fade-up">
+            <div class="certificate-card">
                 {% if certificate.image %}
-                <div class="certificate-image">
-                    <img src="{{ certificate.image.url }}" alt="{{ certificate.title }}">
-                </div>
+                <img src="{{ certificate.image.url }}" alt="{{ certificate.title }}" class="certificate-image">
                 {% endif %}
                 <div class="certificate-content">
                     <h3>{{ certificate.title }}</h3>
                     <p class="issuer">{{ certificate.issuer }}</p>
                     <p class="date">{{ certificate.date|date:"F Y" }}</p>
                     {% if certificate.description %}
-                    <p class="description">{{ certificate.description|truncatechars:100 }}</p>
+                    <p class="description">{{ certificate.description }}</p>
                     {% endif %}
-                    <div class="certificate-buttons">
+                    <div class="certificate-actions">
                         {% if certificate.credential_url %}
-                        <a href="{{ certificate.credential_url }}" class="btn btn-outline" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Sertifikayı Görüntüle
-                        </a>
+                        <a href="{{ certificate.credential_url }}" target="_blank" class="btn-view">Sertifikayı Görüntüle</a>
                         {% endif %}
-                        {% if certificate.slug %}
-                        <a href="{% url 'blog:certificate_detail' certificate.slug %}" class="btn btn-primary">
-                            <i class="fas fa-info-circle"></i> Detayları Gör
-                        </a>
-                        {% endif %}
+                        <a href="{% url 'blog:certificate_detail' certificate.slug %}" class="btn-details">Detayları Gör</a>
                     </div>
                 </div>
             </div>
@@ -41,23 +28,30 @@
 </section>
 
 <style>
-.certificates {
+.certificates-section {
     padding: 100px 0;
     background: #f9fafb;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5rem;
+    color: #1F2937;
 }
 
 .certificates-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
-    margin-top: 50px;
+    padding: 20px;
 }
 
 .certificate-card {
-    background: #fff;
+    background: white;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.07);
     overflow: hidden;
+    box-shadow: 0 4px 24px rgba(79, 70, 229, 0.07);
     transition: transform 0.3s ease;
 }
 
@@ -68,54 +62,80 @@
 .certificate-image {
     width: 100%;
     height: 200px;
-    overflow: hidden;
-}
-
-.certificate-image img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
 }
 
 .certificate-content {
-    padding: 25px;
+    padding: 20px;
 }
 
 .certificate-content h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.5rem;
     margin-bottom: 10px;
-    color: #1f2937;
+    color: #1F2937;
 }
 
-.certificate-content .issuer {
-    color: #4f46e5;
+.issuer {
+    color: #4F46E5;
     font-weight: 500;
     margin-bottom: 5px;
 }
 
-.certificate-content .date {
-    color: #6b7280;
-    font-size: 0.875rem;
+.date {
+    color: #6B7280;
+    font-size: 0.9rem;
     margin-bottom: 15px;
 }
 
-.certificate-content .description {
-    color: #4b5563;
-    font-size: 0.9375rem;
-    line-height: 1.5;
+.description {
+    color: #4B5563;
     margin-bottom: 20px;
+    line-height: 1.6;
 }
 
-.certificate-buttons {
+.certificate-actions {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-.certificate-buttons .btn {
-    flex: 1;
-    min-width: 120px;
-    text-align: center;
+.btn-view, .btn-details {
+    display: inline-block;
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background 0.3s ease;
+}
+
+.btn-view {
+    background: #4F46E5;
+}
+
+.btn-view:hover {
+    background: #4338CA;
+}
+
+.btn-details {
+    background: #10B981;
+}
+
+.btn-details:hover {
+    background: #059669;
+}
+
+@media (max-width: 768px) {
+    .certificates-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .certificate-actions {
+        flex-direction: column;
+    }
+    
+    .btn-view, .btn-details {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style> 

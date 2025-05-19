@@ -344,3 +344,19 @@ class Skill(models.Model):
 
     def __str__(self):
         return self.name
+
+class NavbarLink(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Link Başlığı")
+    section = models.CharField(max_length=100, verbose_name="Bölüm ID'si", help_text="Örnek: home, about, skills, projects, contact")
+    order = models.IntegerField(default=0, verbose_name="Sıralama")
+    is_active = models.BooleanField(default=True, verbose_name="Aktif mi?")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Navbar Link"
+        verbose_name_plural = "Navbar Linkleri"
+        ordering = ['order']
+
+    def __str__(self):
+        return self.title

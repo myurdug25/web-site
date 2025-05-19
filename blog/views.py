@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import BlogPost, Category, SubCategory, Education, Experience, Certificate, Project, Tag, CodeExample, About, SiteSettings, ContactInfo, SkillCategory, Skill, ProjectCategory, CodeLanguage, CodeCategory
+from .models import BlogPost, Category, SubCategory, Education, Experience, Certificate, Project, Tag, CodeExample, About, SiteSettings, ContactInfo, SkillCategory, Skill, ProjectCategory, CodeLanguage, CodeCategory, NavbarLink
 
 def home(request):
     categories = Category.objects.all()
@@ -19,6 +19,8 @@ def home(request):
         'categories': categories,
         'selected_category': selected_category,
         'selected_subcategory': selected_subcategory,
+        'navbar_links': NavbarLink.objects.filter(is_active=True).order_by('order'),
+        'site_settings': SiteSettings.objects.first(),
     }
     
     return render(request, 'index.html', context)
@@ -53,6 +55,7 @@ def index(request):
         'site_settings': SiteSettings.objects.first(),
         'contact_infos': ContactInfo.objects.all(),
         'skill_categories': SkillCategory.objects.prefetch_related('skills').all(),
+        'navbar_links': NavbarLink.objects.filter(is_active=True).order_by('order'),
     }
     return render(request, 'index.html', context)
 
@@ -110,7 +113,11 @@ def codeexample_detail(request, slug):
 
 def site_settings(request):
     settings = SiteSettings.objects.first()
-    return {'site_settings': settings}
+    navbar_links = NavbarLink.objects.filter(is_active=True).order_by('order')
+    return {
+        'site_settings': settings,
+        'navbar_links': navbar_links
+    }
 
 def skill_detail(request, slug):
     skill = get_object_or_404(Skill, slug=slug)
@@ -122,3 +129,12 @@ def certificate_detail(request, slug):
         'certificate': certificate,
         'site_settings': SiteSettings.objects.first()
     })
+
+def certificates(request):
+    certificates = Certificate.objects.all().order_by('-date')
+    context = {
+        'certificates': certificates,
+        'site_settings': SiteSettings.objects.first(),
+        'navbar_links': NavbarLink.objects.filter(is_active=True).order_by('order'),
+    }
+    return render(request, 'sections/certificates.html', context)

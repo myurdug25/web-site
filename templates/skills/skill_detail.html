@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block footer %}
-<footer class="footer sticky-footer">
+<footer class="footer">
     <div class="container">
         <div class="footer-content">
             <span>{{ site_settings.footer_text }}</span>
@@ -33,15 +33,22 @@
 {% endblock %}
 
 <style>
-.sticky-footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+html, body {
+    height: 100%;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.main-content {
+    flex: 1;
+}
+footer {
+    margin-top: auto;
     background: #22223b;
     color: #fff;
     padding: 18px 0 10px 0;
-    z-index: 100;
     text-align: center;
 }
 </style> 

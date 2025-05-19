@@ -5,15 +5,6 @@ AOS.init({
     offset: 100
 });
 
-// Typed.js ile Yazı Animasyonu
-const typed = new Typed('.typed-text', {
-    strings: ['Junior Developer', 'Uygulama Geliştirici', 'Freelancer'],
-    typeSpeed: 100,
-    backSpeed: 50,
-    backDelay: 2000,
-    loop: true
-});
-
 // Mobil Menü Toggle
 const menuBtn = document.querySelector('.menu-btn');
 const navLinks = document.querySelector('.nav-links');

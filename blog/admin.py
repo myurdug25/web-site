@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 from django.urls import reverse
-from .models import BlogPost, Category, SubCategory, Education, Experience, Certificate, Project, Tag, CodeExample, About, SiteSettings, ContactInfo, Skill, SkillCategory, ProjectCategory, CodeLanguage, CodeCategory
+from .models import BlogPost, Category, SubCategory, Education, Experience, Certificate, Project, Tag, CodeExample, About, SiteSettings, ContactInfo, Skill, SkillCategory, ProjectCategory, CodeLanguage, CodeCategory, NavbarLink
 
 class BaseAdmin(admin.ModelAdmin):
     list_per_page = 20
@@ -195,6 +195,14 @@ class CodeLanguageAdmin(admin.ModelAdmin):
 class CodeCategoryAdmin(admin.ModelAdmin):
     list_display = ("name", "slug")
     prepopulated_fields = {'slug': ('name',)}
+
+@admin.register(NavbarLink)
+class NavbarLinkAdmin(admin.ModelAdmin):
+    list_display = ('title', 'section', 'order', 'is_active', 'created_at')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('title', 'section')
+    ordering = ('order',)
 
 # Admin Panel Özelleştirme
 admin.site.site_header = "Murat YURDUGÜL - Yönetim Paneli"
