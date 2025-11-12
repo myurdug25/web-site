@@ -1,4 +1,4 @@
-🌐 Django Web Sitesi – README
+Django Web Sitesi – README
 
 Bu proje, Django framework kullanılarak geliştirilmiş bir web uygulamasıdır. Proje; modern, ölçeklenebilir ve yönetilebilir bir mimari üzerine kurulmuş olup hem backend hem de admin panel üzerinden içerik yönetimi sunar.
 
